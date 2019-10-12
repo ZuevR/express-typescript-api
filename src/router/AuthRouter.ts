@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { AuthController } from '../controllers';
+import { AppValidator } from "../core/AppValidator";
 
 export class AuthRouter {
 
@@ -10,7 +11,12 @@ export class AuthRouter {
   }
 
   public get routes() {
-    this._router.get('/me', AuthController.hello);
+    this._router.post(
+      '/',
+      AppValidator.sanitizeUserData,
+      AppValidator.validateNewUserData,
+      AuthController.signUp
+    );
     return this._router;
   }
 
