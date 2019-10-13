@@ -3,7 +3,9 @@ import { User } from "../models";
 
 export class AuthController {
 
-  public static signUp(req: Request, res: Response, next: NextFunction) {
+  public static async signUp(req: Request, res: Response, next: NextFunction) {
+    const user = new User('Roman', 'zuevrg@yandex.ru', 'a483233ce');
+    await user.save();
     res.send({ k: 1 });
   }
 

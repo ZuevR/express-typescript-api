@@ -5,7 +5,9 @@
  */
 import debug from 'debug';
 import http from 'http';
-import { AppServer } from "./server/app";
+import { AppServer } from './server/app';
+import { DataBase } from './database/DataBase';
+import { dbConfig } from './core/dbConfig';
 
 /**
  * Get port from environment and store in Express.
@@ -19,6 +21,7 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+export const db = new DataBase(dbConfig);
 
 /**
  * Listen on provided port, on all network interfaces.
