@@ -4,9 +4,16 @@ import { User } from "../models";
 export class AuthController {
 
   public static async signUp(req: Request, res: Response, next: NextFunction) {
-    const user = new User('Roman', 'zuevrg@yandex.ru', 'a483233ce');
-    await user.save();
-    res.send({ k: 1 });
+    const { name, email, password } = req.body;
+    const user = new User(name, email, password);
+
+    try {
+      const operationResult = await user.save();
+      res.send(operationResult);
+    } catch (error) {
+      next(error)
+    }
+
   }
 
   public static hello(req: Request, res: Response, next: NextFunction) {

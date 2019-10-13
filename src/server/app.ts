@@ -1,6 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import Router from '../router';
 import logger from 'morgan';
+import { AppHttpError } from "../core/AppError";
 
 export class AppServer {
 
@@ -24,14 +25,14 @@ export class AppServer {
     this.app.use(this.errorHandler);
   }
 
-  private logErrors(err: Error, req: Request, res: Response, next: NextFunction): void {
+  private logErrors(err: AppHttpError, req: Request, res: Response, next: NextFunction): void {
     console.error(err);
     next(err);
   }
 
-  private errorHandler(err: Error, req: Request, res: Response, next: NextFunction): void {
-    res.status(500);
-    res.send({ error: err });
+  private errorHandler(err: AppHttpError, req: Request, res: Response, next: NextFunction): void {
+    res.status(err.statusCode || 500);
+    res.send({ message: err.message, code: err.statusCode });
   }
 
 }
