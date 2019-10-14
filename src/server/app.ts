@@ -1,7 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import Router from '../router';
 import logger from 'morgan';
-import { AppHttpError } from "../core/AppError";
+import { AppHttpError } from "../core/AppTypes";
 
 export class AppServer {
 

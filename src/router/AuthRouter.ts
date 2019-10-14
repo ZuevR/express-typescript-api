@@ -11,12 +11,21 @@ export class AuthRouter {
   }
 
   public get routes() {
+
     this._router.post(
-      '/',
+      '/sign-up',
       AppValidator.sanitizeUserData,
       AppValidator.validateNewUserData,
       AuthController.signUp
     );
+
+    this._router.post(
+      '/sign-in',
+      AppValidator.sanitizeUserData,
+      AppValidator.validateLoginUserData,
+      AuthController.signIn
+    );
+
     return this._router;
   }
 

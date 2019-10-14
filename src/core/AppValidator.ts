@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { isEmail, isLength } from 'validator';
+import { VerifyErrors } from "jsonwebtoken";
+import { AppSecurity } from "./AppSecurity";
 
 export class AppValidator {
 
@@ -29,6 +31,34 @@ export class AppValidator {
       return res.status(400).send({ message: 'The password must be at least 6 and no more 30 characters long' });
     }
     next();
+  }
+
+  public static validateLoginUserData(req: Request, res: Response, next: NextFunction) {
+    const { email, password } = req.body;
+
+    // required validation
+    if (!email) return res.status(400).send({ message: 'The email is required' });
+    if (!password) return res.status(400).send({ message: 'The password is required' });
+
+    // correct validation
+    if (!isEmail(email)) return res.status(400).send({ message: 'Incorrect email' });
+    next();
+  }
+
+  public static validateToken(req: Request, res: Response, next: NextFunction) {
+    const token: string | undefined = req.header('token');
+
+    const verificationCallback = (err: VerifyErrors, decode: any) => {
+      if (decode) {
+        req.id = decode.id;
+        req.name = decode.name;
+        next();
+      } else {
+        return res.status(401).send({ message: err.message });
+      }
+    };
+
+    AppSecurity.verifyToken(token as string, verificationCallback);
   }
 
 }
