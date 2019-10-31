@@ -39,9 +39,6 @@ export class AppValidator {
     // required validation
     if (!email) return res.status(400).send({ message: 'The email is required' });
     if (!password) return res.status(400).send({ message: 'The password is required' });
-
-    // correct validation
-    if (!isEmail(email)) return res.status(400).send({ message: 'Incorrect email' });
     next();
   }
 

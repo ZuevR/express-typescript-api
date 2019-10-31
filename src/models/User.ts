@@ -4,6 +4,8 @@ import { AppHttpError } from "../core/AppTypes";
 
 export class User {
 
+  public refreshToken?: string;
+
   constructor(
     public name: string,
     public email: string,
@@ -12,7 +14,7 @@ export class User {
   ) {
   }
 
-  public static async findByEmail(email: string): Promise<User| undefined> {
+  public static async findByEmail(email: string): Promise<User | undefined> {
     const result = await db.connection.query(
       `select * from users where email = $1`,
       [email]

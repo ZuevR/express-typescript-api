@@ -9,8 +9,8 @@ export class AuthController {
     const user = new User(name, email, password);
 
     try {
-      const operationResult = await user.save();
-      res.status(201).send(operationResult);
+      const result = await user.save();
+      res.status(201).send(result);
     } catch (error) {
       next(error)
     }
