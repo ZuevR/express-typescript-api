@@ -1,11 +1,15 @@
-import { PoolConfig } from "pg";
+import { PoolConfig } from 'pg';
+import { get as getConfig } from 'config';
+import { DBConfig } from "./AppTypes";
+
+const config: DBConfig = getConfig('db');
 
 export const dbConfig: PoolConfig = {
-  host: '127.0.0.1',
-  port: 5432,
-  database: 'node_ts_backend',
-  user: 'postgres',
-  password: 'a483233ce',
+  host: config.host,
+  port: config.port,
+  database: config.database,
+  user: config.user,
+  password: config.password,
   min: 2,
   max: 10,
   connectionTimeoutMillis: 5000

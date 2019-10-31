@@ -1,5 +1,6 @@
 import { hash, compare } from 'bcrypt';
 import { sign, verify, VerifyCallback } from 'jsonwebtoken';
+import { get as getConfig } from 'config';
 import { User } from "../models";
 import { iToken } from "./AppTypes";
 
@@ -14,15 +15,17 @@ export class AppSecurity {
   }
 
   public static generateToken(user: User, hours: number): iToken {
+    const SECRET_KEY: string = getConfig('secretKey');
     const exp = Math.floor(Date.now() / 1000 + (3600 * hours));
     return {
-      id: sign({ exp, id: user.id, name: user.name }, 'h42Hq9lgCs'),
+      id: sign({ exp, id: user.id, name: user.name }, SECRET_KEY),
       expire: exp
     };
   }
 
   public static verifyToken(token: string, callback: VerifyCallback) {
-    return verify(token, 'h42Hq9lgCs', callback);
+    const SECRET_KEY: string = getConfig('secretKey');
+    return verify(token, SECRET_KEY, callback);
   }
 
 }
