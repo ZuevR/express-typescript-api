@@ -16,7 +16,7 @@
     "morgan": "~1.9.1",
     "node-pg-migrate": "^3.23.3",
     "pg": "^7.12.1",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
